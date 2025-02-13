@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 const SearchBar = () => {
     const [recipes, setrecipes] = useState([])
@@ -40,17 +41,21 @@ const SearchBar = () => {
                             value={searchQue}
                             onChange={(e) => setsearchQue(e.target.value)} />
                         {
-                            suggestion.length>0 && (
+                            suggestion.length > 0 && (
                                 <div className='card p-2'>
-                                    {suggestion.map((recipe)=>(
-                                        <div className='p-2 border-bottom'>
-                                            <b>{recipe.name}</b>
-                                        </div>
+                                    {suggestion.map((recipe) => (
+                                        <Link
+                                            key={recipe.id}
+                                            className='text-decoration-none text-dark cursor-pointer'
+                                            to={`/recipe/${recipe.id}`}
+                                            onClick={() => setsearchQue(recipe.name)}>
+                                            <div className='p-2 border-bottom'>
+                                                <b>{recipe.name}</b>
+                                            </div>
+                                        </Link>
                                     ))}
-
                                 </div>
                             )
-
                         }
                     </div>
                 </div>
@@ -59,13 +64,20 @@ const SearchBar = () => {
                 {
                     recipes.map((recipe) => (
                         <div className='col-md-4 mb-3'>
-                            <div className='card p-3'>
-                                <img src={recipe.image} alt={recipe.name} className='rounded rounded-3 my-2' />
+                            <div className='card p-3 recipe'>
+                                <Link
+                                    to={`recipe/${recipe.id}`}
+                                    className='text-decoration-none'>
+                                    <img 
+                                        src={recipe.image} 
+                                        alt={recipe.name} 
+                                        className='img-fluid rounded rounded-3 my-2' />
+                                </Link>
                                 <h5>{recipe.name}</h5>
                                 <p><b>Cuisine: </b>{recipe.cuisine}</p>
                                 <div className='d-flex'>
-                                    <p className='me-3'><b>Prep Time: </b>{recipe.prepTimeMinutes}</p>
-                                    <p><b>Cook Time: </b>{recipe.cookTimeMinutes}</p>
+                                    <p className='me-3'><b>Prep Time: </b>{recipe.prepTimeMinutes}mins</p>
+                                    <p><b>Cook Time: </b>{recipe.cookTimeMinutes}mins</p>
                                 </div>
                             </div>
                         </div>

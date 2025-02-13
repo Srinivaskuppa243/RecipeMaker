@@ -11,3 +11,13 @@ body{
 .search-container{
     position: relative;
 }
+.recipe{
+    transition: all 0.3s;
+}
+.recipe:hover{
+    transform:scale(1.1)
+}
+
+.recipe_img{
+    height: 300px;
+}
